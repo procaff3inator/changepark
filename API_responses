@@ -1,0 +1,56 @@
+$ python -m web.changelly
+Request:
+{'payload': '{"method": "getTransactions", "id": 1, "jsonrpc": "2.0", "params": {}}', 'url': 'https://api.changelly.com', 'headers': {'Content-type': 'application/json', 'api-key': '9fcc302c30464fd78175e748183e5942', 'sign': 'ee91d5fc6a558d0628a206b149d250dbb8e74e6145d870fce85d56850e871727ff3e377b3a249c538df3afc402f10c264448499d2309de890bc3bd668d116e2e'}}
+
+Response:
+{
+    "jsonrpc": "2.0",
+    "id": 1,
+    "result": [
+        {
+            "id": "4bb51c2cca9b",
+            "createdAt": 1514832543,
+            "payinConfirmations": "2",
+            "status": "finished",
+            "currencyFrom": "ltc",
+            "currencyTo": "etc",
+            "payinAddress": "La9tZK9CDV6ZvmsiNjy1716N3d5VAWMhUm",
+            "payinExtraId": null,
+            "payinHash": "4becec02310cacfeb68ff7d89fe14e50cbe90de5c28fe82e97d4c83bda77b9d4",
+            "payoutAddress": "0x632ef8a687989b988f7dec10ff3bc01d6ceba9a9",
+            "payoutExtraId": null,
+            "payoutHash": "0x064c09b08df792307903de3d56a6403d3c2518c4f54c1a3af4efc6bca2a15d41",
+            "amountFrom": "1.99",
+            "amountTo": "14.12749485708940941",
+            "networkFee": "0.00042",
+            "changellyFee": "0.5",
+            "apiExtraFee": "0"
+        },
+        {
+            "id": "f6e0c6a5bb05",
+            "createdAt": 1514831845,
+            "payinConfirmations": "0",
+            "status": "overdue",
+            "currencyFrom": "ltc",
+            "currencyTo": "etc",
+            "payinAddress": "La9tZK9CDV6ZvmsiNjy1716N3d5VAWMhUm",
+            "payinExtraId": null,
+            "payinHash": null,
+            "payoutAddress": "0x632ef8a687989b988f7dec10ff3bc01d6ceba9a9",
+            "payoutExtraId": null,
+            "payoutHash": null,
+            "amountFrom": "",
+            "amountTo": "0",
+            "networkFee": null,
+            "changellyFee": "0.5",
+            "apiExtraFee": "0"
+        }
+    ]
+}
+
+$ python -m web.changelly
+Request:
+{'headers': {'Content-type': 'application/json', 'sign': '5c061e4a2e6d9fc510e2828ea1164a82ebcf7360274c9f04b76a03d484e1c8f4c90d4e073af3e3c19ece5b317d5be74285bff872fba838f9e75b129fc1e00c4e', 'api-key': '9fcc302c30464fd78175e748183e5942'}, 'payload': '{"method": "getStatus", "jsonrpc": "2.0", "params": {"id": "4bb51c2cca9b"}, "id": 1}', 'url': 'https://api.changelly.com'}
+
+Response:
+{"jsonrpc":"2.0","id":1,"result":"finished"}
