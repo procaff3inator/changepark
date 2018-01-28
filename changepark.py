@@ -4,8 +4,8 @@ from config import app_details
 
 
 app = Flask(__name__)
-# app.register_blueprint(cpk, url_prefix=app_details['path'])
-app.register_blueprint(cpk)
+app.register_blueprint(cpk, url_prefix=app_details['path'])
+# app.register_blueprint(cpk)
 
 
 if __name__ == '__main__':

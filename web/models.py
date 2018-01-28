@@ -23,9 +23,5 @@ class User(Model):
         :param password: New password for the user
         :param enabled:  If the user is active or inactive
         """
-        pwhash = kwargs.pop('pwhash')
-        saltmkr = hashlib.sha256()
-        s = pwhash + kwargs['password'] + pwhash
-        kwargs['password'] = saltmkr.update(s).hexdigest()
         kwargs['enabled'] = 1
-        return cls.create(**kwargs)
+        return super(User, cls).create(**kwargs)

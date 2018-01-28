@@ -1,3 +1,4 @@
+from web import auth
 from config import app_details
 from flask import Blueprint, render_template, request
 from functools import wraps
@@ -10,16 +11,56 @@ cpk = Blueprint('cpk', __name__,
         )
 
 
-def needs_auth(f):
-    @wraps(f)
-    def wrapper(*args, **kwargs):
-        pass
-    return wrapper
+# def needs_auth(f):
+    # @wraps(f)
+    # def wrapper(*args, **kwargs):
+        # if auth.authenticate_user(
 
 
 @cpk.route('/')
 def index():
     return render_template('index.html')
+
+
+@cpk.route('/login')
+def login():
+    return render_template('login_page.html')
+
+
+@cpk.route('/register')
+def create_user_from():
+    return render_template('register_user')
+
+
+@cpk.route('/create_user', methods=['POST'])
+def create_user():
+    # basic form validation
+    try:
+        username = request.form['username']
+        password = request.form['password']
+    except KeyError:
+        return 'Please make sure to enter all required fields'
+    nuser = auth.create_user(username, password, app_details['password_hash'])
+
+    return nuser.id
+
+
+@cpk.route('/authenticate', methods=['POST'])
+def authenticate():
+    try:
+        username = request.form['username']
+        password = request.form['password'])
+    except KeyError:
+        return 'Please make sure to enter all required fields'
+
+    user = auth.authenticate_user(username, password,
+                app_details['password_hash'])
+    if user:
+        msg = 'Welcome user'
+    else:
+        msg = 'Invalid credentials'
+
+    return msg
 
 
 @cpk.route('/get_currencies')
