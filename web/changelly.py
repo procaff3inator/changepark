@@ -13,6 +13,7 @@ def api_method(f):
     @wraps(f)
     def d(*args, **kwargs):
         payload = f(*args, **kwargs)
+        print(payload)
         return requests.post(
                     payload['url'],
                     headers=payload['headers'],
@@ -90,6 +91,25 @@ class Changelly(object):
                     })
 
     @api_method
+    def get_status(self, transaction_id):
+        """Get the status of a transaction.
+
+        :param transaction_id: Id of the transaction
+        """
+        return self._prepare_payload({
+                        "method": "getStatus",
+                        "params": {
+                            "id": "dd804d395583"
+                         },
+                         "id": "test"
+                        # 'method': 'getStatus',
+                        # 'params': {
+                            # 'id': transaction_id
+                        # },
+                        # 'id': 1
+                    })
+
+    @api_method
     def create_transaction(self, fromcurr, tocurr, amount, **kwargs):
         """Create a transation to convert from one currency to another.
 
@@ -100,6 +120,7 @@ class Changelly(object):
         :param refund_address: optional param, enables refund
         :param refund_extraid: required for XRP, STEEM/SBD, XLM, DCT, XEM
         """
+        raise NotImplementedError("WIP")
         params = {
             'from': fromcurr,
             'to': tocurr,
@@ -111,7 +132,24 @@ class Changelly(object):
 
         return self._prepare_payload({
                         'method': 'createTransaction',
-                        'params': ,
+                        # 'params': ,
+                        'id': 1,
+                    })
+
+    @api_method
+    def get_transactions(self, **kwargs):
+        """Get a list of transactions according to the filter
+        params passed.
+
+        :param currency: Currency to filter from
+        :param address:  Address to filter by
+        :param extraId:  Extra id needed by some currencies
+        :param limit:    Result limit
+        :param offset:   Result offset
+        """
+        return self._prepare_payload({
+                        'method': 'getTransactions',
+                        'params': {},
                         'id': 1,
                     })
 
@@ -123,6 +161,8 @@ if __name__ == '__main__':
             api_creds['key'],
             api_creds['secret']
         )
-    print("Foo: {}".format(c.get_currencies().text))
+    # print("Foo: {}".format(c.get_currencies().text))
     # print("Foo: {}".format(c.get_exchange_amount("btc", "eth", "100").text))
     # print("Foo: {}".format(c.create_transaction("btc", "eth", "100")))
+    # print("Foo: {}".format(c.get_status('1d36f592f21e').text))
+    print("Foo: {}".format(c.get_transactions().text))
