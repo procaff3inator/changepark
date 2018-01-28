@@ -21,13 +21,13 @@ def api_method(f):
                 )
     return d
 
+
 class Changelly(object):
 
     def __init__(self, url, key, secret):
         self.url = url
         self.key = key
         self.secret = secret
-
 
     def _prepare_payload(self, params):
         json_pl = {'jsonrpc': '2.0', 'id': 1 }
@@ -99,14 +99,9 @@ class Changelly(object):
         return self._prepare_payload({
                         "method": "getStatus",
                         "params": {
-                            "id": "dd804d395583"
+                            "id": transaction_id
                          },
-                         "id": "test"
-                        # 'method': 'getStatus',
-                        # 'params': {
-                            # 'id': transaction_id
-                        # },
-                        # 'id': 1
+                         "id": 1
                     })
 
     @api_method
@@ -164,5 +159,6 @@ if __name__ == '__main__':
     # print("Foo: {}".format(c.get_currencies().text))
     # print("Foo: {}".format(c.get_exchange_amount("btc", "eth", "100").text))
     # print("Foo: {}".format(c.create_transaction("btc", "eth", "100")))
-    # print("Foo: {}".format(c.get_status('1d36f592f21e').text))
-    print("Foo: {}".format(c.get_transactions().text))
+    # print("Foo: {}".format(c.get_status('f6e0c6a5bb05').text))
+    print("Foo: {}".format(c.get_status('4bb51c2cca9b').text))
+    # print("Foo: {}".format(c.get_transactions().text))
