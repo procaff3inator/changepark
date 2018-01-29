@@ -12,7 +12,7 @@ app_details = {
     'port': 8080,
     'secret_key': 'aHo/dbf$asd#kjfhKnbhdL\gj',
     'password_hash': 'donotchangethisorelse',
-    'path': '/cpk',
+    'path': '/',
 }
 
 database = {

@@ -54,3 +54,10 @@ Request:
 
 Response:
 {"jsonrpc":"2.0","id":1,"result":"finished"}
+
+python -m web.changelly
+Request:
+{'payload': '{"method": "getCurrencies", "params": [], "jsonrpc": "2.0", "id": 1}', 'headers': {'Content-type': 'application/json', 'sign': 'd532eb98d32c0774810c7cc91bf4ca296f645b3553108e7626f5dd762462543dddacc785a85aeb00812faedca63467404889bd5eb2022970da816aa8633fefe2', 'api-key': '9fcc302c30464fd78175e748183e5942'}, 'url': 'https://api.changelly.com'}
+
+Response:
+{'result': ['btc', 'eth', 'xem', 'lsk', 'xmr', 'game', 'zec', 'nlg', 'strat', 'rep', 'ltc', 'bcn', 'xrp', 'doge', 'nxt', 'dash', 'nav', 'pot', 'gnt', 'waves', 'edg', 'gup', 'sys', 'str', 'bat', 'snt', 'cvc', 'eos', 'pay', 'bch', 'omg', 'mco', '1st', 'adx', 'zrx', 'btg', 'dgb'], 'jsonrpc': '2.0', 'id': 1}

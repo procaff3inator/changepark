@@ -4,6 +4,7 @@ import hmac
 import json
 import requests
 from functools import wraps
+from uuid import uuid4
 
 def api_method(f):
     """Decorate functions that are API methods.
@@ -30,7 +31,7 @@ class Changelly(object):
         self.secret = secret
 
     def _prepare_payload(self, params):
-        json_pl = {'jsonrpc': '2.0', 'id': 1 }
+        json_pl = {'jsonrpc': '2.0', 'id': str(uuid4()) }
         json_pl.update(params)
         serialized_data = json.dumps(json_pl)
         sign = hmac.new(
@@ -69,7 +70,6 @@ class Changelly(object):
                             'from': fromcurr,
                             'to': tocurr,
                         },
-                        'id': 1,
                     })
 
     @api_method
@@ -87,7 +87,6 @@ class Changelly(object):
                             'to': tocurr,
                             'amount': amount,
                         },
-                        'id': 1,
                     })
 
     @api_method
@@ -101,34 +100,39 @@ class Changelly(object):
                         "params": {
                             "id": transaction_id
                          },
-                         "id": 1
                     })
 
     @api_method
-    def create_transaction(self, fromcurr, tocurr, amount, **kwargs):
+    def create_transaction(self, fromcurr, tocurr, address, amount, **kwargs):
         """Create a transation to convert from one currency to another.
 
-        :param fromcurr: From Currency
-        :param tocurrency: To Currency
-        :param amount: Amount to send
-        :param extra_id: required for XRP, STEEM/SBD, XLM, DCT, XEM
-        :param refund_address: optional param, enables refund
-        :param refund_extraid: required for XRP, STEEM/SBD, XLM, DCT, XEM
+        :param fromcurr:       From Currency
+        :param tocurrency:     To Currency
+        :param address:        Address to send the amount to
+        :param amount:         Amount to send
+        :param extra_id:       Required for XRP, STEEM/SBD, XLM, DCT, XEM
+        :param refund_address: Optional param, enables refund
+        :param refund_extraid: Required for XRP, STEEM/SBD, XLM, DCT, XEM
         """
         raise NotImplementedError("WIP")
         params = {
             'from': fromcurr,
             'to': tocurr,
+            'address': address,
             'amount': amount,
+            'refundAddress': address,
         }
 
-        if kwargs:
-            params.update(kwargs)
+        if 'extraid' in kwargs:
+            params['extraId'] = kwargs['extraid']
+
+        if 'refundextraid' in kwargs:
+            params['refundExtraId'] = kwargs['refundextraid']
+
 
         return self._prepare_payload({
                         'method': 'createTransaction',
-                        # 'params': ,
-                        'id': 1,
+                        'params': params,
                     })
 
     @api_method
@@ -145,7 +149,15 @@ class Changelly(object):
         return self._prepare_payload({
                         'method': 'getTransactions',
                         'params': {},
-                        'id': 1,
+                    })
+
+    @api_method
+    def find_transactions(self, **kwargs):
+        """Filter transations by the given params.
+        """
+        return self._prepare_payload({
+                        'method': 'getTransactions',
+                        'params': kwargs,
                     })
 
 
@@ -157,8 +169,8 @@ if __name__ == '__main__':
             api_creds['secret']
         )
     # print("Foo: {}".format(c.get_currencies().text))
-    # print("Foo: {}".format(c.get_exchange_amount("btc", "eth", "100").text))
+    print("Foo: {}".format(c.get_exchange_amount("btc", "eth", "100").text))
     # print("Foo: {}".format(c.create_transaction("btc", "eth", "100")))
     # print("Foo: {}".format(c.get_status('f6e0c6a5bb05').text))
-    print("Foo: {}".format(c.get_status('4bb51c2cca9b').text))
+    # print("Foo: {}".format(c.get_status('4bb51c2cca9b').text))
     # print("Foo: {}".format(c.get_transactions().text))

@@ -1,14 +1,10 @@
 from web import auth
 from config import app_details
-from flask import Blueprint, render_template, request
+from flask import Flask, render_template, request
 from functools import wraps
 
 
-cpk = Blueprint('cpk', __name__,
-            static_folder="static/",
-            static_url_path="/%s" % __name__,
-            template_folder="templates/"
-        )
+cpk = Flask(__name__)
 
 
 # def needs_auth(f):
@@ -49,7 +45,7 @@ def create_user():
 def authenticate():
     try:
         username = request.form['username']
-        password = request.form['password'])
+        password = request.form['password']
     except KeyError:
         return 'Please make sure to enter all required fields'
 
@@ -66,7 +62,7 @@ def authenticate():
 @cpk.route('/get_currencies')
 def get_currencies():
     # get a list of currencies
-    return "Here are a list of currencies!"
+    return '["btc","eth","xem","lsk","xmr","game","zec","nlg","strat","rep","ltc","bcn","xrp","doge","nxt","dash","nav","pot","gnt","waves","edg","gup","sys","str","bat","snt","cvc","eos","bch","omg","mco","1st","adx","zrx","btg","dgb"]'
 
 
 @cpk.route('/get_exchange_amount', methods=['POST'])
