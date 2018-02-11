@@ -114,13 +114,13 @@ class Changelly(object):
         :param refund_address: Optional param, enables refund
         :param refund_extraid: Required for XRP, STEEM/SBD, XLM, DCT, XEM
         """
-        raise NotImplementedError("WIP")
+        # raise NotImplementedError("WIP")
         params = {
             'from': fromcurr,
             'to': tocurr,
             'address': address,
             'amount': amount,
-            'refundAddress': address,
+            # 'refundAddress': address, # for now let's have no refund!
         }
 
         if 'extraid' in kwargs:
@@ -169,8 +169,11 @@ if __name__ == '__main__':
             api_creds['secret']
         )
     # print("Foo: {}".format(c.get_currencies().text))
-    print("Foo: {}".format(c.get_exchange_amount("btc", "eth", "100").text))
-    # print("Foo: {}".format(c.create_transaction("btc", "eth", "100")))
+    # print("Foo: {}".format(c.get_min_amount('btc', 'ltc').text))
+    # print("Foo: {}".format(c.get_exchange_amount("btc", "eth", "100").text))
     # print("Foo: {}".format(c.get_status('f6e0c6a5bb05').text))
     # print("Foo: {}".format(c.get_status('4bb51c2cca9b').text))
     # print("Foo: {}".format(c.get_transactions().text))
+    # def create_transaction(self, fromcurr, tocurr, address, amount, **kwargs):
+    address = 'LhNXzB2AWQ1Q2ArLPwefvrwY9cCENtDz47'
+    print("Foo: {}".format(c.create_transaction('btc', 'ltc', address, '0.00359353', extraid=None).text))

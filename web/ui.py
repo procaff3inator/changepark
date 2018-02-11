@@ -59,6 +59,16 @@ def authenticate():
     return msg
 
 
+@cpk.route('/history')
+def history():
+    return render_template('history.html')
+
+
+@cpk.route('/processing')
+def processing_route():
+    return render_template('processing.html')
+
+
 @cpk.route('/get_currencies')
 def get_currencies():
     # get a list of currencies
