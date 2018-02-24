@@ -1,3 +1,4 @@
+import json
 from web import auth
 from config import app_details
 from flask import Flask, render_template, request
@@ -15,7 +16,10 @@ cpk = Flask(__name__)
 
 @cpk.route('/')
 def index():
-    return render_template('index.html')
+    responses = '{"result": ["btc","eth","xem","lsk","xmr","game","zec","nlg","strat","rep","ltc","bcn","xrp","doge","nxt","dash","nav","pot","gnt","waves","edg","gup","sys","str","bat","snt","cvc","eos","bch","omg","mco","1st","adx","zrx","btg","dgb"], "jsonrpc": "2.0", "id": 1}'
+    currencies = json.loads(responses)["result"]
+    print(currencies)
+    return render_template('index.html', currencies=currencies)
 
 
 @cpk.route('/login')
@@ -72,7 +76,7 @@ def processing_route():
 @cpk.route('/get_currencies')
 def get_currencies():
     # get a list of currencies
-    return '["btc","eth","xem","lsk","xmr","game","zec","nlg","strat","rep","ltc","bcn","xrp","doge","nxt","dash","nav","pot","gnt","waves","edg","gup","sys","str","bat","snt","cvc","eos","bch","omg","mco","1st","adx","zrx","btg","dgb"]'
+    return ''
 
 
 @cpk.route('/get_exchange_amount', methods=['POST'])

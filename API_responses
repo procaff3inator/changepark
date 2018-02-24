@@ -61,3 +61,7 @@ Request:
 
 Response:
 {'result': ['btc', 'eth', 'xem', 'lsk', 'xmr', 'game', 'zec', 'nlg', 'strat', 'rep', 'ltc', 'bcn', 'xrp', 'doge', 'nxt', 'dash', 'nav', 'pot', 'gnt', 'waves', 'edg', 'gup', 'sys', 'str', 'bat', 'snt', 'cvc', 'eos', 'pay', 'bch', 'omg', 'mco', '1st', 'adx', 'zrx', 'btg', 'dgb'], 'jsonrpc': '2.0', 'id': 1}
+
+Create Transaction:
+{'payload': '{"method": "createTransaction", "id": "e19e69b1-a701-4ecc-ae68-00f25b63e16c", "params": {"amount": "0.00359353", "extraId": null, "to": "ltc", "from": "btc", "address": "LhNXzB2AWQ1Q2ArLPwefvrwY9cCENtDz47"}, "jsonrpc": "2.0"}', 'headers': {'sign': 'dc6f1b50d54dddc20ee8dab2b7cda523f7b72549b4d223ce9bda96786d1a23be4974a219aadbae894d66d08e6956d13d7e37ca7d9cc57015b6575172b4ecb09d', 'api-key': '9fcc302c30464fd78175e748183e5942', 'Content-type': 'application/json'}, 'url': 'https://api.changelly.com'}
+Foo: {"jsonrpc":"2.0","id":"e19e69b1-a701-4ecc-ae68-00f25b63e16c","result":{"id":"e7ff08db497a","apiExtraFee":"0","changellyFee":"0.5","payinExtraId":null,"status":"new","currencyFrom":"btc","currencyTo":"ltc","amountTo":0,"payinAddress":"3HFoKuvtgG3vhVWfFGsRH7KVnFyhK3dzNi","payoutAddress":"LhNXzB2AWQ1Q2ArLPwefvrwY9cCENtDz47","createdAt":"2018-02-17T13:32:17.000Z"}}

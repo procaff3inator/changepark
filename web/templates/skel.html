@@ -1,0 +1,22 @@
+<html>
+    <head>
+        <title>Welcome to changepark</title>
+        <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ url_for('static', filename='css/style.css') }}" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        {% block nav_bar %}{% endblock %}
+
+        {% block header %}{% endblock %}
+        <div class="container">
+            {% block container %}{% endblock %}
+        </div>
+
+        <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/popper.js') }}"></script>
+        <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
+        {% block custom_scripts %}{%endblock %}
+
+    </body>
+</html>

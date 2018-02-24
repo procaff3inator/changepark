@@ -1,0 +1,25 @@
+
+body {
+    background-color: #67b05f;
+    /*background-color: #ffbe00;*/
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, .5);
+    height: 100%;
+}
+
+.curr-list {
+    width: 240px;
+    max-height: 200px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    box-shadow: 0 0 10px 2px rgba(0,0,0,.25);
+    
+}
+
+.curr-element {
+    border-bottom: 1px solid;
+    border-color: #d1c6c6;
+}
+
+.curr-element:hover {
+    background-color: #f8f9fa;
+}
