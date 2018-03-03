@@ -13,12 +13,14 @@ class CreateHistoryTable(Migration):
             table.string('from_curr')
             table.string('to_curr')
             table.string('amount')
-            table.string('address')
-            table.string('extraid')
-            table.string('refund_address')
-            table.string('refund_extraid')
+            table.string('address_in')
+            table.string('address_out')
+            table.string('extraid').nullable()
+            # table.string('refund_address')
+            # table.string('refund_extraid')
             table.string('transaction_id')
             table.string('exchange_status')
+            table.small_integer('sync').default(0)
             table.timestamps()
 
     def down(self):
