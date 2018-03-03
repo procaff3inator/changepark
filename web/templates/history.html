@@ -1,0 +1,109 @@
+{% extends "layout.html" %}
+{% import "components.html" as components %}
+
+{% block container %}
+<link href="{{ url_for('static', filename='css/cryptocoins.css') }}" rel="stylesheet">
+
+<div class="row">
+    <div class="s8 offset-s2">&nbsp;</div>
+</div>
+
+<div class="row">
+    <div class="s8 offset-s2">&nbsp;</div>
+</div>
+
+<div class="jumbotron p-3 p-md-5 rounded">
+    <div class="row">
+        <div class="col-md-5 col-sm-12">
+            <h4>Operations History</h4>
+        </div>
+        <div class="col-md-7 col-sm-12">
+            <div class="row">
+            </div>
+            <div class="row">
+
+
+                <div class="col-md-12">
+                    <a class="btn btn-success float-right" href="{{ url_for('export') }}">Export .csv</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">&nbsp;</div>
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Exchange amount</th>
+                    <th>From Cur.</th>
+                    <th>To Cur.</th>
+                    <th>To Address</th>
+                </thead>
+                <tbody>
+                    {% if history %}
+                        {% for row in history %}
+                        <tr>
+                            <td>{{ row.exchange_status | capitalize }}</td>
+                            <td>{{ row.created_at.strftime('%Y-%m-%d %H:%I:%M') }}</td>
+                            <td>{{ row.amount }}</td>
+                            <td>{{ row.from_curr }}</td>
+                            <td>{{ row.to_curr }}</td>
+                            <td>{{ row.address_out }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="7">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2>You don't have any transactions yet. Make your first payment now.</h2>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
+
+
+{% block custom_scripts %}
+<script type="text/javascript">
+function fetch_rates(fcurr, famt, tcurr, tamt) {
+    if (fcurr == tcurr) {
+        alert("From and to currencies can't be the same");
+    }
+}
+
+$(document).ready(function() {
+    $.get('/get_currencies', function(data) {
+        option = '';
+        $(data).each(function(i, elem) {
+            if (i == 0) {
+                option += '<option value="'+elem+'" selected="selected">'+elem+'</option>';
+            } else {
+                option += '<option value="'+elem+'">'+elem+'</option>';
+            }
+        });
+        $('#from-curr').html(option);
+        option = '';
+        $(data).each(function(i, elem) {
+            if (i == 1) {
+                option += '<option value="'+elem+'" selected="selected">'+elem+'</option>';
+            } else {
+                option += '<option value="'+elem+'">'+elem+'</option>';
+            }
+        });
+        $('#to-curr').html(option);
+    }, "json");
+});
+</script>
+{% endblock %}

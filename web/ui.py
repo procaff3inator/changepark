@@ -1,8 +1,14 @@
 import json
-from web import auth
+from web import activity, auth
 from config import app_details
-from flask import Flask, render_template, request
+from flask import Flask, current_app, make_response
+from flask import Response, request, render_template
 from functools import wraps
+
+try:
+    from io import StringIO
+except ImportError:
+    from StringIO import StringIO
 
 
 cpk = Flask(__name__)
@@ -65,18 +71,28 @@ def authenticate():
 
 @cpk.route('/history')
 def history():
-    return render_template('history.html')
+    user_id = 1
+    data = activity.show_history(user_id)
+    return render_template('history.html', history=data)
 
 
-@cpk.route('/processing')
-def processing_route():
-    return render_template('processing.html')
+@cpk.route('/export/')
+def export():
+    user_id = 1
+
+    f = StringIO()
+    activity.make_csv(user_id, f)
+    output = make_response(f.getvalue())
+
+    output.headers["Content-Disposition"] = "attachment; filename=export.csv"
+    output.headers["Content-type"] = "text/csv"
+
+    return output
 
 
-@cpk.route('/get_currencies')
-def get_currencies():
-    # get a list of currencies
-    return ''
+@cpk.route('/payment')
+def payment():
+    return render_template('payments-page.html')
 
 
 @cpk.route('/get_exchange_amount', methods=['POST'])
@@ -91,9 +107,16 @@ def get_exchange_amount(curr):
 
 @cpk.route('/create_transcation')
 def create_transaction():
+    # validate the transaction
+
+    # make the transaction by calling cl's API
+    data = json.loads('{"jsonrpc":"2.0","id":"e19e69b1-a701-4ecc-ae68-00f25b63e16c","result":{"id":"e7ff08db497a","apiExtraFee":"0","changellyFee":"0.5","payinExtraId":null,"status":"new","currencyFrom":"btc","currencyTo":"ltc","amountTo":0,"payinAddress":"3HFoKuvtgG3vhVWfFGsRH7KVnFyhK3dzNi","payoutAddress":"LhNXzB2AWQ1Q2ArLPwefvrwY9cCENtDz47","createdAt":"2018-02-17T13:32:17.000Z"}}')
+
+    # add the user's id to the transaction data
+    data['result']['user_id'] = 1
+
+    current_app.logger.info("API response: {}".format(data))
+
+    # insert the entry into our database
+    activity.save_transaction(**data['result'])
     return "Transferring the money"
-
-
-@cpk.route('/get_status/<tid>')
-def get_status(tid):
-    return "Getting the status of " + tid
