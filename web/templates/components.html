@@ -3,19 +3,30 @@
     <div class="input-group-prepend">
         <button class="btn dropdown-toggle" type="button"
             data-toggle="dropdown" aria-haspopup="true"
+            id="btn-{{ order }}"
             aria-expanded="false">{{ currencies[order-1] | upper }}</button>
+
         <div class="dropdown-menu curr-list">
             {% for currency in currencies %}
-            <a class="dropdown-item" href="#">
-                <div class="row curr-element" data-curr="{{ currency }}">
-                    <div class="col-4">{{ currency | upper }}</div>
-                    <div class="col-2"><i class="cc {{ currency | upper }}" title="{{ currency | upper }}"></i></div>
+            {% set curr = currency.upper() %}
+            <a class="dropdown-item curr-sel" data-cno="{{ order }}" href="#" data-curr="{{ curr }}">
+                <div class="row curr-element">
+                    <div class="col-4">{{ curr }}</div>
+                    <div class="col-2"><i class="cc {{ curr }}" title="{{ currency | upper }}"></i></div>
                     <div class="col-2">Test</div>
                 </div>
             </a>
             {% endfor %}
         </div>
+
     </div>
-    <input type="text" class="form-control" aria-label="text input with dropdown button">
+
+    {% if order == 1 %}
+    <input type="text" class="form-control" id="famt"
+           aria-label="text input with dropdown button" value="1">
+    {% else %}
+    <input type="text" class="form-control" id="tamt"
+           aria-label="text input with dropdown button" disabled="disabled">
+    {% endif %}
 </div>
 {%- endmacro %}

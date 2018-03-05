@@ -3,7 +3,6 @@
 
 {% block container %}
 <link href="{{ url_for('static', filename='css/cryptocoins.css') }}" rel="stylesheet">
-<script type="text/javascript" src="{{ url_for('static', filename='js/app.js')}}"></script>
 
 <div class="row">
     <div class="s8 offset-s2">&nbsp;</div>
@@ -13,33 +12,61 @@
     <div class="s8 offset-s2">&nbsp;</div>
 </div>
 
-<div class="jumbotron p-3 p-md-5 text-white rounded bg-dark">
+<div class="jumbotron p-3 p-md-5 rounded">
     <div class="row">
         <div class="col-md-5 col-sm-12">
-            <h4 class="font-italic">Cryptocurrency exchange</h4>
-            <p class="lead my-3">Transfer money within minutes</p>
-            <p class="lead mb-0"><a href="#" class="text-success font-weight-bold">Sign up for free...</a><br><br></p>
+            <h4>Operations History</h4>
         </div>
         <div class="col-md-7 col-sm-12">
             <div class="row">
             </div>
             <div class="row">
 
-                <div class="col-md-6">
-                    <div class="col-md-12 font-italic">You have:</div>
-                    {{ components.drop_down(currencies, 1) }}
-                </div>
-
-                <div class="col-md-6">
-                    <div class="col-md-12 font-italic">You get:</div>
-                    {{ components.drop_down(currencies, 2) }}
-                </div>
 
                 <div class="col-md-12">
-                    <button class="btn btn-success float-right">Exchange</button>
+                    <button class="btn btn-success float-right">Export .csv</button>
                 </div>
 
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">&nbsp;</div>
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th>Exchange amount</th>
+                    <th>Total fee</th>
+                    <th>Exchange rate</th>
+                    <th>Receiver</th>
+                    <th>Amount received</th>
+                </thead>
+                <tbody>
+                    {% if history %}
+                    <tr>
+                        <td>Status</td>
+                        <td>Status</td>
+                        <td>Status</td>
+                        <td>Status</td>
+                        <td>Status</td>
+                        <td>Status</td>
+                        <td>Status</td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7">
+                            <div class="row">
+                                <div class="col-12 text-center">
+                                    <h2>You don't have any transactions yet. Make your first payment now.</h2>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
         </div>
     </div>
 

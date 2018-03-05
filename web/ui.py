@@ -1,9 +1,10 @@
 import json
-from web import activity, auth
-from config import app_details
+from config import app_details, api_creds
 from flask import Flask, current_app, make_response
 from flask import Response, request, render_template
 from functools import wraps
+from web import activity, auth
+from web.changelly import Changelly
 
 try:
     from io import StringIO
@@ -24,7 +25,7 @@ cpk = Flask(__name__)
 def index():
     responses = '{"result": ["btc","eth","xem","lsk","xmr","game","zec","nlg","strat","rep","ltc","bcn","xrp","doge","nxt","dash","nav","pot","gnt","waves","edg","gup","sys","str","bat","snt","cvc","eos","bch","omg","mco","1st","adx","zrx","btg","dgb"], "jsonrpc": "2.0", "id": 1}'
     currencies = json.loads(responses)["result"]
-    print(currencies)
+    current_app.logger.info(currencies)
     return render_template('index.html', currencies=currencies)
 
 
@@ -76,7 +77,7 @@ def history():
     return render_template('history.html', history=data)
 
 
-@cpk.route('/export/')
+@cpk.route('/export')
 def export():
     user_id = 1
 
@@ -95,14 +96,22 @@ def payment():
     return render_template('payments-page.html')
 
 
-@cpk.route('/get_exchange_amount', methods=['POST'])
-def get_exchange_amount(curr):
-    from_curr = request.form['from_curr']
-    to_curr = request.form['to_curr']
-    amount = request.form['amount']
+@cpk.route('/get_exchange_amount')
+def get_exchange_amount():
+    from_curr = request.args['from_curr']
+    to_curr = request.args['to_curr']
+    amount = request.args['amount']
+
     # check if the amount for the current exchange is
     # greater that the min amount for the transfer to work
-    return "1.1"
+    c = Changelly(
+            api_creds['url'],
+            api_creds['key'],
+            api_creds['secret']
+        )
+    cresponse = c.get_exchange_amount(from_curr, to_curr, amount)
+    current_app.logger.info(cresponse.text)
+    return cresponse.text
 
 
 @cpk.route('/create_transcation')

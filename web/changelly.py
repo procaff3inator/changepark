@@ -6,6 +6,7 @@ import requests
 from functools import wraps
 from uuid import uuid4
 
+
 def api_method(f):
     """Decorate functions that are API methods.
 
