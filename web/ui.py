@@ -31,12 +31,12 @@ def index():
 
 @cpk.route('/login')
 def login():
-    return render_template('login_page.html')
+    return render_template('login-page.html')
 
 
 @cpk.route('/register')
 def create_user_from():
-    return render_template('register_user')
+    return render_template('register-user')
 
 
 @cpk.route('/create_user', methods=['POST'])
@@ -93,7 +93,10 @@ def export():
 
 @cpk.route('/payment')
 def payment():
-    return render_template('payments-page.html')
+    responses = '{"result": ["btc","eth","xem","lsk","xmr","game","zec","nlg","strat","rep","ltc","bcn","xrp","doge","nxt","dash","nav","pot","gnt","waves","edg","gup","sys","str","bat","snt","cvc","eos","bch","omg","mco","1st","adx","zrx","btg","dgb"], "jsonrpc": "2.0", "id": 1}'
+    currencies = json.loads(responses)["result"]
+    current_app.logger.info(currencies)
+    return render_template('payments-page.html', currencies=currencies)
 
 
 @cpk.route('/get_exchange_amount')

@@ -3,7 +3,6 @@
 
 {% block container %}
 <link href="{{ url_for('static', filename='css/cryptocoins.css') }}" rel="stylesheet">
-<script type="text/javascript" src="{{ url_for('static', filename='js/app.js')}}"></script>
 
 <div class="row">
     <div class="s8 offset-s2">&nbsp;</div>
@@ -50,33 +49,8 @@
 
 {% block custom_scripts %}
 <script type="text/javascript">
-function fetch_rates(fcurr, famt, tcurr, tamt) {
-    if (fcurr == tcurr) {
-        alert("From and to currencies can't be the same");
-    }
-}
-
 $(document).ready(function() {
-    $.get('/get_currencies', function(data) {
-        option = '';
-        $(data).each(function(i, elem) {
-            if (i == 0) {
-                option += '<option value="'+elem+'" selected="selected">'+elem+'</option>';
-            } else {
-                option += '<option value="'+elem+'">'+elem+'</option>';
-            }
-        });
-        $('#from-curr').html(option);
-        option = '';
-        $(data).each(function(i, elem) {
-            if (i == 1) {
-                option += '<option value="'+elem+'" selected="selected">'+elem+'</option>';
-            } else {
-                option += '<option value="'+elem+'">'+elem+'</option>';
-            }
-        });
-        $('#to-curr').html(option);
-    }, "json");
+    $($('.curr-sel')[0]).trigger('click');
 });
 </script>
 {% endblock %}

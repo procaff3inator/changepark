@@ -14,60 +14,39 @@
 
 <div class="jumbotron p-3 p-md-5 rounded">
     <div class="row">
-        <div class="col-md-5 col-sm-12">
-            <h4>Operations History</h4>
+
+        <div class="col-md-6">
+            <div class="col-md-12 font-italic">You have:</div>
+            {{ components.drop_down(currencies, 1) }}
         </div>
-        <div class="col-md-7 col-sm-12">
-            <div class="row">
-            </div>
-            <div class="row">
 
+        <div class="col-md-6">
+            <div class="col-md-12 font-italic">You get:</div>
+            {{ components.drop_down(currencies, 2) }}
+        </div>
 
-                <div class="col-md-12">
-                    <button class="btn btn-success float-right">Export .csv</button>
+        <div class="col-md-6">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-addr">Address</span>
                 </div>
-
+                <input type="text" class="form-control" placeholder="To Address" aria-label="To Address" aria-describedby="basic-addr">
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">&nbsp;</div>
-        <div class="col-12">
-            <table class="table">
-                <thead>
-                    <th>Status</th>
-                    <th>Date</th>
-                    <th>Exchange amount</th>
-                    <th>Total fee</th>
-                    <th>Exchange rate</th>
-                    <th>Receiver</th>
-                    <th>Amount received</th>
-                </thead>
-                <tbody>
-                    {% if history %}
-                    <tr>
-                        <td>Status</td>
-                        <td>Status</td>
-                        <td>Status</td>
-                        <td>Status</td>
-                        <td>Status</td>
-                        <td>Status</td>
-                        <td>Status</td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="7">
-                            <div class="row">
-                                <div class="col-12 text-center">
-                                    <h2>You don't have any transactions yet. Make your first payment now.</h2>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                    {% endif %}
-                </tbody>
-            </table>
+
+        <div class="col-md-6">
+            <div class="input-group mb-3" id="extraid-txt">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="basic-extraid">Extra ID</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Extra ID" aria-label="Extra ID" aria-describedby="basic-extraid">
+            </div>
         </div>
+
+        <div class="col-md-12">
+            <button class="btn btn-success float-right">Exchange</button>
+        </div>
+
     </div>
 
 </div>
@@ -77,33 +56,13 @@
 
 {% block custom_scripts %}
 <script type="text/javascript">
-function fetch_rates(fcurr, famt, tcurr, tamt) {
-    if (fcurr == tcurr) {
-        alert("From and to currencies can't be the same");
-    }
-}
-
 $(document).ready(function() {
-    $.get('/get_currencies', function(data) {
-        option = '';
-        $(data).each(function(i, elem) {
-            if (i == 0) {
-                option += '<option value="'+elem+'" selected="selected">'+elem+'</option>';
-            } else {
-                option += '<option value="'+elem+'">'+elem+'</option>';
-            }
-        });
-        $('#from-curr').html(option);
-        option = '';
-        $(data).each(function(i, elem) {
-            if (i == 1) {
-                option += '<option value="'+elem+'" selected="selected">'+elem+'</option>';
-            } else {
-                option += '<option value="'+elem+'">'+elem+'</option>';
-            }
-        });
-        $('#to-curr').html(option);
-    }, "json");
+    $('#extraid-txt').on('eidneeded', function() {
+        $(this).show();
+    }).on('eidnotneeded', function() {
+        $(this).hide();
+    });
+    $($('.curr-sel')[0]).trigger('click');
 });
 </script>
 {% endblock %}

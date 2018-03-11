@@ -7,6 +7,8 @@ function fetchExchangePrice(fCurr, tCurr, amt, cb) {
 
 function handleSelection() {
 
+    var eidcurrs = ["XRP", "STEEM", "SBD", "XLM", "DCT", "XEM"];
+
     var fBtn = $('#btn-1');
     var tBtn = $('#btn-2');
     var fCurr = $('#famt');
@@ -24,6 +26,12 @@ function handleSelection() {
     function(data) {
         tCurr.val(data.result);
     });
+
+    if (eidcurrs.indexOf(tBtn.text())) {
+        $('#extraid-txt').trigger('eidneeded');
+    } else {
+        $('#extraid-txt').trigger('eidnotneeded');
+    }
 
 }
 
